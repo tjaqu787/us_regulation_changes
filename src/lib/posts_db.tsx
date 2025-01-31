@@ -1,12 +1,13 @@
 // lib/db.ts
 import sqlite3 from 'sqlite3'
-import { open } from 'sqlite'
+import { Database, open } from 'sqlite'
 
-interface Post {
+export interface Post {
   title: string
   date: string
   content: string
   excerpt: string
+  slug: string
 }
 
 // Initialize database connection
@@ -36,7 +37,6 @@ export async function getPost(slug: string): Promise<Post | null> {
       FROM posts
       WHERE slug = ?
     `, [slug])
-    
     return post || null
   } finally {
     await db.close()
